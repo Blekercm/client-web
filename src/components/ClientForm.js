@@ -31,6 +31,13 @@ const ClientForm = () => {
   useEffect(() => {
     if (params.id) {
       loadClient(params.id);
+    } else {
+      setClient({
+        name: "",
+        surname: "",
+        date_birth: new Date()
+      });
+      setEditing(false)
     }
   }, [params.id]);
 
@@ -96,7 +103,7 @@ const ClientForm = () => {
           <CardContent>
             <form onSubmit={handleSubmit}>
               <TextField
-                variant="filled"
+                variant="outlined"
                 label="Nombre"
                 sx={{
                   display: "block",
@@ -106,7 +113,7 @@ const ClientForm = () => {
                 onChange={handleChange}
                 value={client.name}
                 inputProps={{ style: { color: "white" } }}
-                InputLabelProps={{ style: { color: "white" } }}
+                InputLabelProps={{ style: { color: "#BCBCBC" } }}
               />
               <TextField
                 variant="outlined"
@@ -119,39 +126,42 @@ const ClientForm = () => {
                 onChange={handleChange}
                 value={client.surname}
                 inputProps={{ style: { color: "white" } }}
-                InputLabelProps={{ style: { color: "white" } }}
+                InputLabelProps={{ style: { color: "#BCBCBC" } }}
               />
 
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DatePicker
                   label="Fecha de Nacimiento"
-                  sx={{
-                    display: "block",
-                    margin: ".5rem 0",
-                  }}
+                  InputProps={{ style: { color: "white", width: 195 } }}
                   value={client.date_birth}
                   onChange={handleChange}
                   name="date_birth"
-                  renderInput={(params) => <TextField {...params} sx={{
+                  renderInput={(params) => <TextField {...params}
+                    variant="outlined"
+                    InputLabelProps={{ style: { color: "#BCBCBC" } }} sx={{
                       display: "block",
-                      margin: ".5rem 0",
                     }} />}
-                    inputProps={{ style: { color: "white" } }}
+                  inputProps={{ style: { color: "white" } }}
                 />
               </LocalizationProvider>
 
+              <Grid container direction="row">
               <Button
                 type="submit"
                 variant="contained"
                 color="primary"
+                style={{
+                  marginTop: 15
+                }}
                 disabled={!client.name || !client.surname}
               >
                 {loading ? (
                   <CircularProgress color="inherit" size={25} />
-                ) : (
-                  "Guardar"
-                )}
+                ) : editing ? "Actualizar" : "Crear"
+                }
               </Button>
+              </Grid>
+              
             </form>
           </CardContent>
         </Card>

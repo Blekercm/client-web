@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 // import DeleteModal from "./DeleteModal";
 import { useNavigate } from "react-router-dom";
-import { Button, Card, CardContent, Typography } from "@mui/material";
+import { Button, Card, CardContent, Grid, Typography } from "@mui/material";
 import { urlApi } from "../utils/config"
 
 const ClientList = () => {
@@ -31,9 +31,10 @@ const ClientList = () => {
 
   return (
     <>
-      <h1>Client</h1>
-      {clients.map((item) => (
+      <br></br>
+      {clients.map((item, index) => (
         <Card
+          key={index}
           style={{
             marginBottom: ".7rem",
             backgroundColor: "#1e272e",
@@ -50,9 +51,26 @@ const ClientList = () => {
                 color: "white",
               }}
             >
-              <Typography>{item.name}</Typography>
-              <Typography>{item.surname}</Typography>
-              <Typography>{item.age.years}</Typography>
+              <Grid container direction="column">
+                <Grid item container direction="row">
+                  <Typography style={{
+                    color: "#BCBCBC"
+                  }}>Nombres:</Typography>
+                  <Typography paddingLeft={1}>{item.name}</Typography>
+                </Grid>
+                <Grid item container direction="row">
+                  <Typography style={{
+                    color: "#BCBCBC"
+                  }}>Apellidos:</Typography>
+                  <Typography paddingLeft={1}>{item.surname}</Typography>
+                </Grid>
+                <Grid item container direction="row">
+                  <Typography style={{
+                    color: "#BCBCBC"
+                  }}>Edad:</Typography>
+                  <Typography paddingLeft={1}>{item.age}</Typography>
+                </Grid>
+              </Grid>
             </div>
             <div>
               <Button
@@ -60,15 +78,14 @@ const ClientList = () => {
                 color="inherit"
                 onClick={() => navigate(`/client/${item.id}/edit`)}
               >
-                Edit
+                Editar
               </Button>
               <Button
                 variant="contained"
-                color="warning"
                 onClick={() => handleDelete(item.id)}
-                style={{ marginLeft: ".5rem" }}
+                style={{ marginLeft: ".5rem", color: "white", backgroundColor: "red" }}
               >
-                Delete
+                Eliminar
               </Button>
             </div>
           </CardContent>
