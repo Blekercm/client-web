@@ -20,8 +20,9 @@ const ClientForm = () => {
   const [client, setClient] = useState({
     name: "",
     surname: "",
-    date_birth: new Date(),
+    date_birth: new Date()
   });
+
   const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState(false);
 
@@ -52,6 +53,7 @@ const ClientForm = () => {
     event.preventDefault();
     setLoading(true);
     try {
+      
       if (editing) {
         const response = await fetch(urlApi + "client/update/" + params.id,
           {
@@ -104,7 +106,7 @@ const ClientForm = () => {
             <form onSubmit={handleSubmit}>
               <TextField
                 variant="outlined"
-                label="Nombre"
+                label="Nombres"
                 sx={{
                   display: "block",
                   margin: ".5rem 0",
@@ -117,7 +119,7 @@ const ClientForm = () => {
               />
               <TextField
                 variant="outlined"
-                label="Apellido"
+                label="Apellidos"
                 sx={{
                   display: "block",
                   margin: ".5rem 0",
@@ -134,14 +136,15 @@ const ClientForm = () => {
                   label="Fecha de Nacimiento"
                   InputProps={{ style: { color: "white", width: 195 } }}
                   value={client.date_birth}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    setClient({...client, date_birth: e });
+                  }}
                   name="date_birth"
                   renderInput={(params) => <TextField {...params}
                     variant="outlined"
                     InputLabelProps={{ style: { color: "#BCBCBC" } }} sx={{
                       display: "block",
                     }} />}
-                  inputProps={{ style: { color: "white" } }}
                 />
               </LocalizationProvider>
 
